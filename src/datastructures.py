@@ -39,4 +39,5 @@ class FamilyStructure:
         for member in self._members:
             if member['id'] == int(id):
                 self._members.remove(member)
+                return {"done": True}
         return {"Error!": f"Could not delete. No such member: {id}"}
