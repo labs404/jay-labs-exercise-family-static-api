@@ -56,7 +56,10 @@ def get_all_family_members():
 @app.route("/member/<int:member_id>", methods=["GET"])
 def get_single_family_member(member_id):
     member = jackson_family.get_member(member_id)
-    return jsonify(member), 200
+    if 'first_name' in member:
+        return jsonify(member), 200
+    else:
+        return jsonify(member), 404
 
 @app.route("/member", methods=["POST"])
 def create_new_member():
@@ -72,7 +75,7 @@ def delete_member(member_id):
     if 'first_name' in member:
         return f"successfully deleted id: {member_id} ({member['first_name']} {member['last_name']})"
     else:
-        return deleted
+        return deleted, 404
 
 # this only runs if `$ python src/app.py` is executed
 if __name__ == '__main__':
